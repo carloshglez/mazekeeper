@@ -1,0 +1,121 @@
+import Block from './Block'
+import { BLOCK_TYPE, GAME_STATE, randomNumBetween } from '../util/util'
+import { MAZE_WORLD } from '../util/mazes'
+
+export default class Maze {
+    constructor(args) {
+        this.mazeMap = args.mazeMap;
+        this.create = args.create;
+        this.addSteps = args.addSteps;
+        this.gameState = GAME_STATE.INTRO;
+
+        this.currentPosition = {
+            row: 0,
+            column: 0
+        }
+        this.exitPosition = {
+            row: 0,
+            column: 0
+        }
+        this.lastMove = 0;
+        this.moveFrequency = 75;
+        this.drawMaze();
+    }
+
+    updateBackgroundMaze(mazeMap, gameState) {
+        this.mazeMap = mazeMap;
+        this.gameState = gameState;
+        this.drawMaze();
+    }
+
+    updateMaze(mazeNumber, gameState) {
+        this.mazeMap = MAZE_WORLD[mazeNumber];
+        this.gameState = gameState;
+        this.drawMaze();
+    }
+
+    drawMaze() {
+        this.mazeMap.map.forEach((arrayItems, row) => {
+            //console.log(row + '[' + arrayItems + ']')
+            arrayItems.forEach((cellValue, column) => {
+                //console.log(column + '[' + cellValue + ']')
+                if (cellValue === 9) {
+                    this.drawBlock(row, column, BLOCK_TYPE.EXIT)
+                    this.exitPosition = { row, column }
+                }
+                if (cellValue === 8) {
+                    this.drawBlock(row, column, BLOCK_TYPE.ENTRY)
+                    this.currentPosition = { row, column }
+                }
+                if (cellValue === 1) {
+                    this.drawBlock(row, column, (this.gameState === GAME_STATE.SELECT) ? BLOCK_TYPE.ILLUSION_WALL : BLOCK_TYPE.WALL)
+                }
+            });
+        });
+    }
+
+    drawBlock(row, column, blockType) {
+        var block = new Block({
+            ...blockType,
+            blockSize: this.mazeMap.blockSize,
+            position: {
+                x: column * this.mazeMap.blockSize,
+                y: row * this.mazeMap.blockSize
+            },
+            translate: {
+                x: 15,
+                y: 50
+            },
+        });
+        this.timerID = setTimeout(
+            () => { this.create(block, 'blocks'); },
+            randomNumBetween(100, 700)
+        );
+    }
+
+    isAvailable(newPosition) {
+        return (this.mazeMap.map[newPosition.row][newPosition.column] === 0 ||
+            this.mazeMap.map[newPosition.row][newPosition.column] === 9)
+    }
+
+    wasVisited(position) {
+        return (this.mazeMap.map[position.row][position.column] === 8)
+    }
+
+    isExitPosition(position) {
+        return (position.row === this.exitPosition.row &&
+            position.column === this.exitPosition.column)
+    }
+
+    render(state) {
+        if (Date.now() - this.lastMove > this.moveFrequency) {
+            var newPosition = null;
+            if (state.keys.up) {
+                newPosition = { row: this.currentPosition.row - 1, column: this.currentPosition.column };
+            }
+            if (state.keys.left) {
+                newPosition = { row: this.currentPosition.row, column: this.currentPosition.column - 1 };
+            }
+            if (state.keys.right) {
+                newPosition = { row: this.currentPosition.row, column: this.currentPosition.column + 1 };
+            }
+            if (state.keys.down) {
+                newPosition = { row: this.currentPosition.row + 1, column: this.currentPosition.column };
+            }
+
+            if (newPosition && this.isAvailable(newPosition)) {
+                if (!this.wasVisited(this.currentPosition)) {
+                    this.drawBlock(this.currentPosition.row, this.currentPosition.column, BLOCK_TYPE.PATH)
+                }
+                this.currentPosition = newPosition;
+                this.drawBlock(this.currentPosition.row, this.currentPosition.column, BLOCK_TYPE.ACTIVE)
+                this.addSteps();
+
+                if (this.isExitPosition(this.currentPosition)) {
+                    console.log('Win!')
+                }
+            }
+            this.lastMove = Date.now();
+        }
+    }
+}

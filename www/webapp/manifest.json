@@ -1,0 +1,16 @@
+{
+    "short_name": "Maze Keeper",
+    "name": "Maze Keeper v1.0.0",
+    "icons": [
+      {
+        "src": "icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "../index.html",
+    "display": "fullscreen",
+    "orientation": "landscape",
+    "theme_color": "#000000",
+    "background_color": "#ffffff"
+  }
