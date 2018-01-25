@@ -198,10 +198,10 @@ export default class App extends Component {
 		this.maze[0].updateBackgroundMaze(TITLE_MAP, GAME_STATE.INTRO);
 	}
 
-	displayGameSelect() {
+	displayGameSelect(mazeNumber) {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.SELECT);
-		this.maze[0].updateMaze(0, GAME_STATE.SELECT);
+		this.maze[0].updateMaze(mazeNumber, GAME_STATE.SELECT);
 	}
 
 	displayAbout() {
@@ -222,7 +222,7 @@ export default class App extends Component {
 			introGame = <Intro appVersion={this.appVersion} gameSelect={this.displayGameSelect.bind(this)}/>
 		}
 		if (this.getState().game.select) {
-			selectGame = <SelectGame displayIntro={this.displayIntro.bind(this)} displayAbout={this.displayAbout.bind(this)}/>
+			selectGame = <SelectGame displayIntro={this.displayIntro.bind(this)} displayAbout={this.displayAbout.bind(this)} updateMaze={this.displayGameSelect.bind(this)}/>
 		}
 		if (this.getState().game.about) {
 			about = <About gameSelect={this.displayGameSelect.bind(this)} appversion={this.appVersion} />

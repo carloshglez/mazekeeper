@@ -42,18 +42,25 @@ export default class SelectGame extends React.Component {
 		this.myScroll = null;
 	}
 
+	log() {
+		console.log('Press')
+	}
 	getMazeButton(mazeNumber) {
+		var enabled = false;
 		var properStyle = 'mazeButton disabled';
 		var icon = <MdStarOutline/>;
 		if (mazeNumber < this.currentMaze) {
 			properStyle = 'mazeButton visited';
 			icon = <MdStars/>
+			enabled = true;
 		} else if (mazeNumber === this.currentMaze) {
 			properStyle = 'mazeButton current';
+			enabled = true;
+			mazeNumber--;
 		}
 
 		return (
-			<button className={properStyle} onClick={null}>{icon}Maze {mazeNumber}</button>
+			<button className={properStyle} onContextMenu={(enabled) ? this.props.updateMaze.bind(this, mazeNumber) : null} onClick={this.log}>{icon}Maze {mazeNumber}</button>
 		);
 	}
 

@@ -10,7 +10,7 @@ export default class Intro extends React.Component {
                 <div className='intro'>
                     <button
                         className='infoButton'
-                        onClick={this.props.gameSelect}>
+                        onClick={this.props.gameSelect.bind(this, 0)}>
                         S T A R T
                     </button>
                 </div>

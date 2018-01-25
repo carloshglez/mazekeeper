@@ -13,7 +13,7 @@ export default class About extends React.Component {
                     <br/>
                     <button
                         className='infoButton'
-                        onClick={this.props.gameSelect}>
+                        onClick={this.props.gameSelect.bind(this, 0)}>
                         Thanks for playing!
                     </button>
                 </div>
