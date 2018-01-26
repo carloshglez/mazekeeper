@@ -60,7 +60,9 @@ export default class SelectGame extends React.Component {
 		}
 
 		return (
-			<button className={properStyle} onContextMenu={(enabled) ? this.props.updateMaze.bind(this, mazeNumber) : null} onClick={this.log}>{icon}Maze {mazeNumber}</button>
+			<button className={properStyle}
+				onContextMenu={(enabled) ? this.props.updateMaze.bind(this, mazeNumber) : null}
+				onClick={(enabled) ? this.props.displayControlPanel.bind(this, mazeNumber) : null}>{icon}Maze {mazeNumber}</button>
 		);
 	}
 

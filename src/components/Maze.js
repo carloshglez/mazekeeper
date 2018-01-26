@@ -39,15 +39,15 @@ export default class Maze {
             //console.log(row + '[' + arrayItems + ']')
             arrayItems.forEach((cellValue, column) => {
                 //console.log(column + '[' + cellValue + ']')
-                if (cellValue === 9) {
+                if (cellValue === BLOCK_TYPE.EXIT.cellValue) {
                     this.drawBlock(row, column, BLOCK_TYPE.EXIT)
                     this.exitPosition = { row, column }
                 }
-                if (cellValue === 8) {
+                if (cellValue === BLOCK_TYPE.ENTRY.cellValue) {
                     this.drawBlock(row, column, BLOCK_TYPE.ENTRY)
                     this.currentPosition = { row, column }
                 }
-                if (cellValue === 1) {
+                if (cellValue === BLOCK_TYPE.WALL.cellValue) {
                     this.drawBlock(row, column, (this.gameState === GAME_STATE.SELECT) ? BLOCK_TYPE.ILLUSION_WALL : BLOCK_TYPE.WALL)
                 }
             });
@@ -74,48 +74,41 @@ export default class Maze {
     }
 
     isAvailable(newPosition) {
-        return (this.mazeMap.map[newPosition.row][newPosition.column] === 0 ||
-            this.mazeMap.map[newPosition.row][newPosition.column] === 9)
-    }
-
-    wasVisited(position) {
-        return (this.mazeMap.map[position.row][position.column] === 8)
+        return (this.mazeMap.map[newPosition.row][newPosition.column] === BLOCK_TYPE.PATH.cellValue)
     }
 
     isExitPosition(position) {
-        return (position.row === this.exitPosition.row &&
-            position.column === this.exitPosition.column)
+        return (position.row === this.exitPosition.row && position.column === this.exitPosition.column)
     }
 
     render(state) {
-        if (Date.now() - this.lastMove > this.moveFrequency) {
-            var newPosition = null;
-            if (state.keys.up) {
-                newPosition = { row: this.currentPosition.row - 1, column: this.currentPosition.column };
-            }
-            if (state.keys.left) {
-                newPosition = { row: this.currentPosition.row, column: this.currentPosition.column - 1 };
-            }
-            if (state.keys.right) {
-                newPosition = { row: this.currentPosition.row, column: this.currentPosition.column + 1 };
-            }
-            if (state.keys.down) {
-                newPosition = { row: this.currentPosition.row + 1, column: this.currentPosition.column };
-            }
+        if (state.keys.up || state.keys.down || state.keys.right || state.keys.left) {
+            if (Date.now() - this.lastMove > this.moveFrequency) {
+                var newPosition = null;
+                if (state.keys.up) {
+                    newPosition = { row: this.currentPosition.row - 1, column: this.currentPosition.column };
+                }
+                if (state.keys.left) {
+                    newPosition = { row: this.currentPosition.row, column: this.currentPosition.column - 1 };
+                }
+                if (state.keys.right) {
+                    newPosition = { row: this.currentPosition.row, column: this.currentPosition.column + 1 };
+                }
+                if (state.keys.down) {
+                    newPosition = { row: this.currentPosition.row + 1, column: this.currentPosition.column };
+                }
 
-            if (newPosition && this.isAvailable(newPosition)) {
-                if (!this.wasVisited(this.currentPosition)) {
+                if (this.isAvailable(newPosition)) {
                     this.drawBlock(this.currentPosition.row, this.currentPosition.column, BLOCK_TYPE.PATH)
+                    this.drawBlock(newPosition.row, newPosition.column, BLOCK_TYPE.ACTIVE)
+                    this.addSteps();
+                    if (this.isExitPosition(newPosition)) {
+                        console.log('Win!')
+                    }
+                    this.currentPosition = newPosition;
                 }
-                this.currentPosition = newPosition;
-                this.drawBlock(this.currentPosition.row, this.currentPosition.column, BLOCK_TYPE.ACTIVE)
-                this.addSteps();
-
-                if (this.isExitPosition(this.currentPosition)) {
-                    console.log('Win!')
-                }
+                this.lastMove = Date.now();
             }
-            this.lastMove = Date.now();
         }
     }
 }

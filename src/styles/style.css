@@ -77,7 +77,7 @@ canvas {
   user-select: none;
   height: 100%;
   width: 100%;
-
+  margin-top: 55px;
 }
 .scorelayer {
   display: block;
@@ -105,8 +105,12 @@ canvas {
   top: 30px;
   left: 20px;
 }
-.time-score {
+.settings-score {
   top: 10px;
+  right: 25px;
+}
+.time-score {
+  top: 30px;
   right: 20px;
   width: 20%;
 }

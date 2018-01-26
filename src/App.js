@@ -136,6 +136,7 @@ export default class App extends Component {
 
 		this.updateObjects(this.maze, 'maze')
 		this.updateObjects(this.blocks, 'blocks')
+		//console.log(this.blocks.length)
 
 		context.restore();
 
@@ -202,12 +203,19 @@ export default class App extends Component {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.SELECT);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.SELECT);
+
 	}
 
 	displayAbout() {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.ABOUT);
 		this.maze[0].updateBackgroundMaze(ABOUT_MAP, GAME_STATE.ABOUT);
+	}
+
+	displayControlPanel(mazeNumber) {
+		this.deleteBlocks();
+		this.actions.setGameState(GAME_STATE.INGAME);
+		this.maze[0].updateMaze(mazeNumber, GAME_STATE.INGAME);
 	}
 
 	render() {
@@ -222,11 +230,22 @@ export default class App extends Component {
 			introGame = <Intro appVersion={this.appVersion} gameSelect={this.displayGameSelect.bind(this)}/>
 		}
 		if (this.getState().game.select) {
-			selectGame = <SelectGame displayIntro={this.displayIntro.bind(this)} displayAbout={this.displayAbout.bind(this)} updateMaze={this.displayGameSelect.bind(this)}/>
+			selectGame = <SelectGame
+				displayIntro={this.displayIntro.bind(this)}
+				displayAbout={this.displayAbout.bind(this)}
+				updateMaze={this.displayGameSelect.bind(this)}
+				displayControlPanel={this.displayControlPanel.bind(this)}/>
 		}
 		if (this.getState().game.about) {
 			about = <About gameSelect={this.displayGameSelect.bind(this)} appversion={this.appVersion} />
 		}
+		if (this.getState().game.inGame) {
+			controlPanel = <div>
+				<ScorePanel time={this.getState().stats.time} steps={this.getState().stats.steps} gameSelect={this.displayGameSelect.bind(this)}/>
+				<ButtonsPanel customEvents={this.getTouchEvents()} />
+			</div>
+		}
+
 		return (
 			<div>
 				{

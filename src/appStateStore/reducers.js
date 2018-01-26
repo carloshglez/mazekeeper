@@ -43,9 +43,9 @@ export const game = (state = {}, action) => {
             return ({
                 intro: (action.payload === GAME_STATE.INTRO) ? true : false,
                 select: (action.payload === GAME_STATE.SELECT) ? true : false,
-                inGame: (action.payload === GAME_STATE.CLASSIC) ? true : false,
+                inGame: (action.payload === GAME_STATE.INGAME) ? true : false,
                 about: (action.payload === GAME_STATE.ABOUT) ? true : false,
-                awards: (action.payload === GAME_STATE.AWARDS) ? true : false
+                over: (action.payload === GAME_STATE.OVER) ? true : false
             }
             )
         default:

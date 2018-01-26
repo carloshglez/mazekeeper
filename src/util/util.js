@@ -19,10 +19,9 @@ export const KEY = {
 export const GAME_STATE = {
 	INTRO: 'intro',
     SELECT: 'select',
-    INGAME: 'ingame',
+    INGAME: 'inGame',
 	OVER: 'over',
-	ABOUT: 'about',
-	AWARDS: 'awards'
+	ABOUT: 'about'
 };
 
 /**
@@ -62,6 +61,7 @@ export const BLOCK_TYPE = {
 	},
 	PATH: {
 		id: 'path',
+		cellValue: 0,
 		fillColor: 'Aqua',
 		strokeColor: 'Silver',
 		globalAlpha: 0.5
