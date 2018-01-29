@@ -54,7 +54,7 @@ export default class Maze {
         });
     }
 
-    drawBlock(row, column, blockType) {
+    drawBlock(row, column, blockType, animation=true) {
         var block = new Block({
             ...blockType,
             blockSize: this.mazeMap.blockSize,
@@ -67,14 +67,19 @@ export default class Maze {
                 y: 50
             },
         });
-        this.timerID = setTimeout(
-            () => { this.create(block, 'blocks'); },
-            randomNumBetween(100, 700)
-        );
+        if(animation) {
+            this.timerID = setTimeout(
+                () => { this.create(block, 'blocks'); },
+                randomNumBetween(100, 700)
+            );
+        } else {
+            this.create(block, 'blocks');
+        }
     }
 
     isAvailable(newPosition) {
-        return (this.mazeMap.map[newPosition.row][newPosition.column] === BLOCK_TYPE.PATH.cellValue)
+        let currentBlock = this.mazeMap.map[newPosition.row][newPosition.column];
+        return (currentBlock === BLOCK_TYPE.PATH.cellValue || currentBlock === BLOCK_TYPE.EXIT.cellValue)
     }
 
     isExitPosition(position) {
@@ -88,19 +93,19 @@ export default class Maze {
                 if (state.keys.up) {
                     newPosition = { row: this.currentPosition.row - 1, column: this.currentPosition.column };
                 }
+                if (state.keys.down) {
+                    newPosition = { row: this.currentPosition.row + 1, column: this.currentPosition.column };
+                }
                 if (state.keys.left) {
                     newPosition = { row: this.currentPosition.row, column: this.currentPosition.column - 1 };
                 }
                 if (state.keys.right) {
                     newPosition = { row: this.currentPosition.row, column: this.currentPosition.column + 1 };
                 }
-                if (state.keys.down) {
-                    newPosition = { row: this.currentPosition.row + 1, column: this.currentPosition.column };
-                }
 
                 if (this.isAvailable(newPosition)) {
-                    this.drawBlock(this.currentPosition.row, this.currentPosition.column, BLOCK_TYPE.PATH)
-                    this.drawBlock(newPosition.row, newPosition.column, BLOCK_TYPE.ACTIVE)
+                    this.drawBlock(this.currentPosition.row, this.currentPosition.column, BLOCK_TYPE.PATH, false)
+                    this.drawBlock(newPosition.row, newPosition.column, BLOCK_TYPE.ACTIVE, false)
                     this.addSteps();
                     if (this.isExitPosition(newPosition)) {
                         console.log('Win!')

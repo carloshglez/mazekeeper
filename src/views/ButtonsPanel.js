@@ -17,8 +17,16 @@ export default class ButtonsPanel extends React.Component {
                 </div>
             );
         } else {
-            buttonsLayer = (
+            /*buttonsLayer = (
                 <div className='movelayer' {...this.props.customEvents}></div>
+            );*/
+            buttonsLayer = (
+                <div>
+                    <button id='left'   className='actionButton btnLeft' 	onClick={this.props.handleButtonTouch.bind(this, 'left')}> 	<MdArrowBack />		</button>
+                    <button id='up'     className='actionButton btnUp' 		onClick={this.props.handleButtonTouch.bind(this, 'up')}>	<MdArrowUpward />	</button>
+                    <button id='right'  className='actionButton btnRight' 	onClick={this.props.handleButtonTouch.bind(this, 'right')}>	<MdArrowForward />	</button>
+                    <button id='down'   className='actionButton btnDown' 	onClick={this.props.handleButtonTouch.bind(this, 'down')}>	<MdArrowDownward />		</button>
+                </div>
             );
         }
         return (

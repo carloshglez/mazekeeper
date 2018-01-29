@@ -73,12 +73,12 @@ export default class App extends Component {
 
 	getTouchEvents() {
 		let touchEvents = {
-			onTouchStart: this.handleTouch.bind(this, 'touchStart'),
-			onTouchMove: this.handleTouch.bind(this, 'touchMove'),
-			onTouchEnd: this.handleTouch.bind(this, 'touchEnd'),
-			onMouseDown: this.handleTouch.bind(this, 'mouseDown'),
-			onMouseMove: this.handleTouch.bind(this, 'mouseMove'),
-			onMouseUp: this.handleTouch.bind(this, 'mouseUp')
+			onTouchStart: this.handleScreenTouch.bind(this, 'touchStart'),
+			onTouchMove: this.handleScreenTouch.bind(this, 'touchMove'),
+			onTouchEnd: this.handleScreenTouch.bind(this, 'touchEnd'),
+			onMouseDown: this.handleScreenTouch.bind(this, 'mouseDown'),
+			onMouseMove: this.handleScreenTouch.bind(this, 'mouseMove'),
+			onMouseUp: this.handleScreenTouch.bind(this, 'mouseUp')
 		};
 		return touchEvents;
 	}
@@ -93,7 +93,19 @@ export default class App extends Component {
 		);
 	}
 
-	handleTouch(value, e) {
+	handleButtonTouch(value, e) {
+		let keys = this.getState().keys;
+		let action = e.currentTarget.id;
+
+		keys[action] = true;
+		this.timerID = setTimeout(
+            () => { keys[action] = false; },
+            50
+        );
+		this.actions.setEventKeys(keys);
+	}
+
+	handleScreenTouch(value, e) {
 		e.persist()
 		let keys = this.getState().keys;
 		let action = e.currentTarget.id;
@@ -203,7 +215,6 @@ export default class App extends Component {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.SELECT);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.SELECT);
-
 	}
 
 	displayAbout() {
@@ -215,6 +226,7 @@ export default class App extends Component {
 	displayControlPanel(mazeNumber) {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.INGAME);
+		this.actions.setSteps(0);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.INGAME);
 	}
 
@@ -242,7 +254,7 @@ export default class App extends Component {
 		if (this.getState().game.inGame) {
 			controlPanel = <div>
 				<ScorePanel time={this.getState().stats.time} steps={this.getState().stats.steps} gameSelect={this.displayGameSelect.bind(this)}/>
-				<ButtonsPanel customEvents={this.getTouchEvents()} />
+				<ButtonsPanel customEvents={this.getTouchEvents()} handleButtonTouch={this.handleButtonTouch.bind(this)} />
 			</div>
 		}
 

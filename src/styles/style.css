@@ -53,32 +53,6 @@ canvas {
 }
 
 /*---------------------------------------------------------*/
-.aboutImg {
-  width: 80px;
-}
-.instructions {
-  top: 10px;
-  left: 50%;
-}
-.help-info {
-  display: block;
-  position: absolute;
-  font-size: 10px;
-  z-index: 1;
-  transform: translate(-50%, 0);
-  text-align: center;
-  line-height: 1.6;
-  user-select: none;
-}
-.movelayer {
-  display: block;
-  position: absolute;
-  z-index: 1;
-  user-select: none;
-  height: 100%;
-  width: 100%;
-  margin-top: 55px;
-}
 .scorelayer {
   display: block;
   position: absolute;
@@ -150,6 +124,9 @@ canvas {
   text-align: center;
   user-select: none;
   width: 50%;
+}
+.aboutImg {
+  width: 80px;
 }
 .intro {
   position: absolute;
@@ -323,4 +300,76 @@ user-select: none;
 .mazeButton:hover{
   box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 0.75);
   outline: none;
+}
+
+/*---------------------------------------------------------*/
+.instructions {
+  top: 10px;
+  left: 50%;
+}
+.help-info {
+  display: block;
+  position: absolute;
+  font-size: 10px;
+  z-index: 1;
+  transform: translate(-50%, 0);
+  text-align: center;
+  line-height: 1.6;
+  user-select: none;
+}
+.movelayer {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  user-select: none;
+  height: 100%;
+  width: 100%;
+  margin-top: 55px;
+}
+.actionButton{
+	display: block;
+	position: fixed;
+	z-index: 1;
+	border: 2px solid #ffffff;
+	background-color: transparent;
+	color: #ffffff;
+	font-size: 35px;
+	cursor: pointer;
+	flex: '1 1 0';
+	user-select: none;
+  outline: none;
+}
+.actionButton:hover{
+	background-color: #ffffff;
+	color: #000000;
+	outline: none;
+}
+.btnLeft {
+	bottom: 35%;
+  left: 0%;
+  border-radius: 0px 40px 40px 0px;
+  width: 50px;
+	height: 75px;
+}
+.btnRight {
+	bottom: 35%;
+  right: 0%;
+  border-radius: 40px 0px 0px 40px;
+  width: 50px;
+	height: 75px;
+}
+.btnUp {
+	bottom: 0%;
+  left: 20%;
+  border-radius: 40px 40px 0px 0px;
+  width: 75px;
+	height: 50px;
+
+}
+.btnDown {
+	bottom: 0%;
+  right: 20%;
+  border-radius: 40px 40px 0px 0px;
+  width: 75px;
+	height: 50px;
 }
