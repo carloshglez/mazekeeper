@@ -373,3 +373,41 @@ user-select: none;
   width: 75px;
 	height: 50px;
 }
+
+/*---------------------------------------------------------*/
+.stats {
+  display: flex;
+  justify-content: space-evenly;
+  align-content: stretch;
+  width: 50%;
+}
+.stat-title {
+  text-align: left;
+}
+.stat-value {
+  text-align: right;
+}
+.retry {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+}
+.endgame {
+  position: absolute;
+  z-index: 1;
+  user-select: none;
+  top: 57%;
+  left: 50.5%;
+  transform: translate(-50%, -50%);
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 84%;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 0px 10px 10px rgba(255, 255, 255, 0.75);
+  /*border-radius: 10px 50px 10px 50px;*/
+}

@@ -10,6 +10,7 @@ import Intro from './views/Intro'
 import SelectGame from './views/SelectGame'
 import ScorePanel from './views/ScorePanel'
 import ButtonsPanel from './views/ButtonsPanel'
+import EndGame from './views/EndGame'
 import About from './views/About'
 import { TITLE_MAP, ABOUT_MAP, KEY, GAME_STATE } from './util/util'
 
@@ -27,7 +28,6 @@ export default class App extends Component {
 			create: this.createObject.bind(this),
 			addSteps: this.addSteps.bind(this)
 		}), 'maze');
-
 	}
 
 	getState() {
@@ -42,7 +42,6 @@ export default class App extends Component {
 		const context = this.refs.canvas.getContext('2d');
 		this.actions.setContext(context);
 
-		//this.startTimer(null, 30);
 		requestAnimationFrame(() => { this.update() });
 	}
 
@@ -182,12 +181,12 @@ export default class App extends Component {
 		this.actions.setSteps(this.getState().stats.steps + 1);
 	}
 
-	increaseTimeCounter(time) {
-		this.actions.setTimeValue(this.getState().stats.timeValue + time);
+	setTimeCounter(time) {
+		this.actions.setTimeValue(time);
 	}
 
 	startTimer(item, time) {
-		this.increaseTimeCounter(time);
+		this.setTimeCounter(time);
 		clearInterval(this.timerID);
 		this.timerID = setInterval(
 			() => this.tick(item),
@@ -197,10 +196,10 @@ export default class App extends Component {
 
 	tick(item) {
 		if (this.getState().stats.timeValue > 0) {
-			this.increaseTimeCounter(-1);
+			this.setTimeCounter(this.getState().stats.timeValue - 1);
 		} else {
 			clearInterval(this.timerID);
-			console.log('Lose!')
+			console.log('Time Over!')
 			//item.disableAllPowerUp();
 		}
 	}
@@ -215,6 +214,8 @@ export default class App extends Component {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.SELECT);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.SELECT);
+		this.startTimer(null, 0);
+		this.actions.setSteps(0);
 	}
 
 	displayAbout() {
@@ -226,8 +227,14 @@ export default class App extends Component {
 	displayControlPanel(mazeNumber) {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.INGAME);
-		this.actions.setSteps(0);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.INGAME);
+		this.startTimer(null, this.maze[0].mazeMap.maxTime);
+		this.actions.setSteps(0);
+	}
+
+	displayEndGame() {
+		this.actions.setGameState(GAME_STATE.OVER);
+		clearInterval(this.timerID);
 	}
 
 	render() {
@@ -236,42 +243,53 @@ export default class App extends Component {
 		let controlPanel;
 		let endGame;
 		let about;
-		let awards;
 
 		if (this.getState().game.intro) {
-			introGame = <Intro appVersion={this.appVersion} gameSelect={this.displayGameSelect.bind(this)}/>
+			introGame = <Intro
+				appVersion={this.appVersion}
+				gameSelect={this.displayGameSelect.bind(this)} />
 		}
 		if (this.getState().game.select) {
 			selectGame = <SelectGame
 				displayIntro={this.displayIntro.bind(this)}
 				displayAbout={this.displayAbout.bind(this)}
 				updateMaze={this.displayGameSelect.bind(this)}
-				displayControlPanel={this.displayControlPanel.bind(this)}/>
+				displayControlPanel={this.displayControlPanel.bind(this)} />
 		}
 		if (this.getState().game.about) {
-			about = <About gameSelect={this.displayGameSelect.bind(this)} appversion={this.appVersion} />
+			about = <About
+				gameSelect={this.displayGameSelect.bind(this)}
+				appversion={this.appVersion} />
 		}
 		if (this.getState().game.inGame) {
 			controlPanel = <div>
-				<ScorePanel time={this.getState().stats.time} steps={this.getState().stats.steps} gameSelect={this.displayGameSelect.bind(this)}/>
-				<ButtonsPanel customEvents={this.getTouchEvents()} handleButtonTouch={this.handleButtonTouch.bind(this)} />
+				<ScorePanel
+					time={this.getState().stats.timeValue}
+					steps={this.getState().stats.steps}
+					mazeMap={this.maze[0].mazeMap}
+					gameSelect={this.displayEndGame.bind(this)} />
+				<ButtonsPanel
+					customEvents={this.getTouchEvents()}
+					handleButtonTouch={this.handleButtonTouch.bind(this)} />
 			</div>
+		}
+		if (this.getState().game.over) {
+			endGame = <EndGame
+				time={this.getState().stats.timeValue}
+				steps={this.getState().stats.steps}
+				mazeMap={this.maze[0].mazeMap}
+				gameSelect={this.displayGameSelect.bind(this)}
+				displayControlPanel={this.displayControlPanel.bind(this)}
+				mazeNumber={0}/>
 		}
 
 		return (
 			<div>
-				{
-					/*
-					<ScorePanel time={this.getState().stats.time} steps={this.getState().stats.steps} />
-					<ButtonsPanel customEvents={this.getTouchEvents()} />
-					*/
-				}
 				{introGame}
 				{selectGame}
 				{controlPanel}
 				{endGame}
 				{about}
-				{awards}
 
 				<canvas ref='canvas'
 					width={this.getState().screen.width * this.getState().screen.ratio}

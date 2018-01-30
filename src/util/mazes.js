@@ -1,5 +1,7 @@
 export const MAZE_WORLD = [
 	{
+		maxTime: 60,
+		maxSteps: 200,
 		blockSize: 28,
 		map: [
 			[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -15,6 +17,8 @@ export const MAZE_WORLD = [
 		]
 	},
 	{
+		maxTime: 50,
+		maxSteps: 150,
 		blockSize: 28,
 		map: [
 			[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
@@ -30,6 +34,8 @@ export const MAZE_WORLD = [
 		]
 	},
 	{
+		maxTime: 30,
+		maxSteps: 100,
 		blockSize: 28,
 		map: [
 			[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
