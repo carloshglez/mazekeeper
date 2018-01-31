@@ -15,7 +15,7 @@ export default class SelectGame extends React.Component {
 	constructor(props) {
 		super(props);
 		this.myScroll = null;
-		this.currentMaze = 3;
+		this.currentMaze = 2;
 	}
 
 	componentDidMount() {
@@ -56,7 +56,6 @@ export default class SelectGame extends React.Component {
 		} else if (mazeNumber === this.currentMaze) {
 			properStyle = 'mazeButton current';
 			enabled = true;
-			mazeNumber--;
 		}
 
 		return (

@@ -22,7 +22,7 @@ export default class ScorePanel extends React.Component {
                 </span>
                 <span className='score time-score'>
                     <div style={{ float: 'left' }}><MdAccessAlarm /></div>
-                    <Progress className='time-meter' color='WhiteSmoke' completed={timeValueForLabel} />
+                    <Progress className={(timeValueForLabel < 30 && timeValueForLabel > 0) ? 'time-meter flashit' : 'time-meter'} color='WhiteSmoke' completed={timeValueForLabel} />
                 </span>
             </div>
         );

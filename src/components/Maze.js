@@ -7,6 +7,7 @@ export default class Maze {
         this.mazeMap = args.mazeMap;
         this.create = args.create;
         this.addSteps = args.addSteps;
+        this.endGame = args.endGame;
         this.gameState = GAME_STATE.INTRO;
 
         this.currentPosition = {
@@ -109,6 +110,7 @@ export default class Maze {
                     this.addSteps();
                     if (this.isExitPosition(newPosition)) {
                         console.log('Win!')
+                        this.endGame();
                     }
                     this.currentPosition = newPosition;
                 }

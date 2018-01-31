@@ -26,7 +26,8 @@ export default class App extends Component {
 		this.createObject(new Maze({
 			mazeMap: TITLE_MAP,
 			create: this.createObject.bind(this),
-			addSteps: this.addSteps.bind(this)
+			addSteps: this.addSteps.bind(this),
+			endGame: this.displayEndGame.bind(this)
 		}), 'maze');
 	}
 
@@ -200,7 +201,7 @@ export default class App extends Component {
 		} else {
 			clearInterval(this.timerID);
 			console.log('Time Over!')
-			//item.disableAllPowerUp();
+			this.displayEndGame();
 		}
 	}
 
@@ -220,7 +221,7 @@ export default class App extends Component {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.SELECT);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.SELECT);
-		this.startTimer(null, 0);
+		this.setTimeCounter(0);
 		this.actions.setSteps(0);
 	}
 
@@ -229,16 +230,15 @@ export default class App extends Component {
 		this.actions.setGameState(GAME_STATE.INGAME);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.INGAME);
 
-		this.actions.setCurrentMaze(this.maze[0].mazeMap);
+		this.startTimer(null,this.maze[0].mazeMap.maxTime);
 		this.actions.setSteps(0);
-		this.startTimer(null, this.getState().currentMaze.maxTime);
-
 	}
 
 	displayEndGame() {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.OVER);
 		this.maze[0].updateBackgroundMaze(GAME_OVER, GAME_STATE.OVER);
+		this.setTimeCounter(0);
 		clearInterval(this.timerID);
 	}
 
@@ -271,7 +271,7 @@ export default class App extends Component {
 				<ScorePanel
 					time={this.getState().stats.timeValue}
 					steps={this.getState().stats.steps}
-					mazeMap={this.getState().currentMaze}
+					mazeMap={this.maze[0].mazeMap}
 					gameSelect={this.displayEndGame.bind(this)} />
 				<ButtonsPanel
 					customEvents={this.getTouchEvents()}
@@ -282,7 +282,7 @@ export default class App extends Component {
 			endGame = <EndGame
 				time={this.getState().stats.timeValue}
 				steps={this.getState().stats.steps}
-				mazeMap={this.getState().currentMaze}
+				mazeMap={this.maze[0].mazeMap}
 				gameSelect={this.displayGameSelect.bind(this)}
 				displayControlPanel={this.displayControlPanel.bind(this)}/>
 		}
