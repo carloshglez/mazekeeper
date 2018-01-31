@@ -42,26 +42,38 @@ export default class SelectGame extends React.Component {
 		this.myScroll = null;
 	}
 
-	log() {
-		console.log('Press')
-	}
 	getMazeButton(mazeNumber) {
-		var enabled = false;
-		var properStyle = 'mazeButton disabled';
-		var icon = <MdStarOutline/>;
+		let mazeDisabled = {
+			style: 'mazeButton disabled',
+			icon: <MdStarOutline/>,
+			onClick: null,
+			onContextMenu: null
+		}
+		let mazeVisited = {
+			style: 'mazeButton visited',
+			icon: <MdStars/>,
+			onClick: this.props.displayControlPanel.bind(this, mazeNumber),
+			onContextMenu: this.props.updateMaze.bind(this, mazeNumber)
+		}
+		let mazeInProgress = {
+			style: 'mazeButton current',
+			icon: <MdStarOutline/>,
+			onClick: this.props.displayControlPanel.bind(this, mazeNumber),
+			onContextMenu: null
+		}
+		let mazeButton = mazeDisabled;
+
 		if (mazeNumber < this.currentMaze) {
-			properStyle = 'mazeButton visited';
-			icon = <MdStars/>
-			enabled = true;
+			mazeButton = mazeVisited;
 		} else if (mazeNumber === this.currentMaze) {
-			properStyle = 'mazeButton current';
-			enabled = true;
+			mazeButton = mazeInProgress;
 		}
 
 		return (
-			<button className={properStyle}
-				onContextMenu={(enabled) ? this.props.updateMaze.bind(this, mazeNumber) : null}
-				onClick={(enabled) ? this.props.displayControlPanel.bind(this, mazeNumber) : null}>{icon}Maze {mazeNumber}</button>
+			<button className={mazeButton.style} onContextMenu={mazeButton.onContextMenu} onClick={mazeButton.onClick}>
+				<div className='mazelevel'>{mazeButton.icon}{mazeButton.icon}{mazeButton.icon}</div>
+				{mazeNumber}
+			</button>
 		);
 	}
 
