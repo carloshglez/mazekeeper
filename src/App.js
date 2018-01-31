@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import MdAccessAlarm from 'react-icons/lib/md/access-alarm'
-import MdStars from 'react-icons/lib/md/stars'
-import MdStarOutline from 'react-icons/lib/md/star-outline'
-import Progress from 'react-progressbar';
-
 import './styles/style.css';
 import Maze from './components/Maze'
 import Intro from './views/Intro'
