@@ -1,5 +1,6 @@
 export const MAZE_WORLD = [
 	{
+		id: 0,
 		maxTime: 60,
 		maxSteps: 200,
 		blockSize: 28,
@@ -17,6 +18,7 @@ export const MAZE_WORLD = [
 		]
 	},
 	{
+		id: 1,
 		maxTime: 50,
 		maxSteps: 150,
 		blockSize: 28,
@@ -34,6 +36,7 @@ export const MAZE_WORLD = [
 		]
 	},
 	{
+		id: 2,
 		maxTime: 30,
 		maxSteps: 100,
 		blockSize: 28,

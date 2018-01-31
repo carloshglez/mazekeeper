@@ -80,6 +80,15 @@ export const steps = (state = 0, action) => {
     }
 }
 
+export const currentMaze = (state = {}, action) => {
+    switch (action.type) {
+        case C.SET_CURRENT_MAZE:
+            return (action.payload)
+        default:
+            return state
+    }
+}
+
 export default combineReducers({
     context,
     screen,
@@ -89,5 +98,6 @@ export default combineReducers({
         timeValue,
         steps,
         topScore
-    })
+    }),
+    currentMaze
 })

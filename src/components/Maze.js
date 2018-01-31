@@ -48,7 +48,7 @@ export default class Maze {
                     this.currentPosition = { row, column }
                 }
                 if (cellValue === BLOCK_TYPE.WALL.cellValue) {
-                    this.drawBlock(row, column, (this.gameState === GAME_STATE.SELECT) ? BLOCK_TYPE.ILLUSION_WALL : BLOCK_TYPE.WALL)
+                    this.drawBlock(row, column, (this.gameState === GAME_STATE.SELECT || this.gameState === GAME_STATE.OVER) ? BLOCK_TYPE.ILLUSION_WALL : BLOCK_TYPE.WALL)
                 }
             });
         });

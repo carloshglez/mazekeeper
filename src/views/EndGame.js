@@ -6,13 +6,24 @@ import FaTrophy from 'react-icons/lib/fa/trophy'
 
 export default class EndGame extends React.Component {
 	render() {
-        let message = 'message here...';
+        let recordMessage = [
+			<div><div className='got-award'><FaTrophy/></div>New record!</div>,
+			'You Win!'
+			]
+		let winMessage = [
+			<div>Great job! :)</div>,
+			'Game Over!'
+			]
+		let lostMessage = [
+			<div>:( So sad...</div>,
+			'Game Over!'
+			]
+		let message = lostMessage;
 
 		return (
       		<div className='endgame'>
 				<div className='stats'>
 					<div className='stat-title'>
-                        <br/>
 						<h4>Results:</h4>
 						<p>
 							Your Steps:<br/>
@@ -21,27 +32,28 @@ export default class EndGame extends React.Component {
 							Your Time:<br/>
 							Top Time:<br/>
 						</p>
-						<hr/>
-						<b>&nbsp;{ message }</b>
-                        <br/>
+						<br/>
+						<br/>
                         <br/>
 					</div>
 					<div className='stat-value'>
-						<h3>&nbsp;</h3>
+						<h4>&nbsp;</h4>
 						<p>
-							{new Intl.NumberFormat().format(this.props.steps)}	<br/>
-							{new Intl.NumberFormat().format(this.props.mazeMap.maxSteps)}	<br/>
+							{this.props.steps} / {this.props.mazeMap.maxSteps}	<br/>
+							{0}	<br/>
 							<br/>
-							{this.props.time}	seg.<br/>
-							{this.props.mazeMap.maxTime} seg.<br/>
+							{this.props.time} / {this.props.mazeMap.maxTime}	seg.<br/>
+							{0} seg.<br/>
 						</p>
+						<hr/>
+						{message[0]}
 					</div>
 				</div>
 				<div className='retry'>
-					<h2>Game Over!</h2>
+					<h2>{message[1]}</h2>
 					<button
 						className='infoButton'
-						onClick={ this.props.displayControlPanel.bind(this, this.props.mazeNumber) }>
+						onClick={ this.props.displayControlPanel.bind(this, this.props.mazeMap.id) }>
 						<FaRepeat/> Try again?
 					</button>
 					<button

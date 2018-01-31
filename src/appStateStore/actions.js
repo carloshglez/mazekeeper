@@ -59,3 +59,12 @@ export function setSteps (value) {
         payload: value
     }
 }
+
+/*----------------------------------------------------------*/
+/*----------------------------------------------------------*/
+export function setCurrentMaze (currentMaze) {
+    return {
+        type: C.SET_CURRENT_MAZE,
+        payload: currentMaze
+    }
+}

@@ -12,7 +12,7 @@ import ScorePanel from './views/ScorePanel'
 import ButtonsPanel from './views/ButtonsPanel'
 import EndGame from './views/EndGame'
 import About from './views/About'
-import { TITLE_MAP, ABOUT_MAP, KEY, GAME_STATE } from './util/util'
+import { TITLE_MAP, ABOUT_MAP, GAME_OVER, KEY, GAME_STATE } from './util/util'
 
 export default class App extends Component {
 	constructor(props) {
@@ -210,6 +210,12 @@ export default class App extends Component {
 		this.maze[0].updateBackgroundMaze(TITLE_MAP, GAME_STATE.INTRO);
 	}
 
+	displayAbout() {
+		this.deleteBlocks();
+		this.actions.setGameState(GAME_STATE.ABOUT);
+		this.maze[0].updateBackgroundMaze(ABOUT_MAP, GAME_STATE.ABOUT);
+	}
+
 	displayGameSelect(mazeNumber) {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.SELECT);
@@ -218,22 +224,21 @@ export default class App extends Component {
 		this.actions.setSteps(0);
 	}
 
-	displayAbout() {
-		this.deleteBlocks();
-		this.actions.setGameState(GAME_STATE.ABOUT);
-		this.maze[0].updateBackgroundMaze(ABOUT_MAP, GAME_STATE.ABOUT);
-	}
-
 	displayControlPanel(mazeNumber) {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.INGAME);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.INGAME);
-		this.startTimer(null, this.maze[0].mazeMap.maxTime);
+
+		this.actions.setCurrentMaze(this.maze[0].mazeMap);
 		this.actions.setSteps(0);
+		this.startTimer(null, this.getState().currentMaze.maxTime);
+
 	}
 
 	displayEndGame() {
+		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.OVER);
+		this.maze[0].updateBackgroundMaze(GAME_OVER, GAME_STATE.OVER);
 		clearInterval(this.timerID);
 	}
 
@@ -266,7 +271,7 @@ export default class App extends Component {
 				<ScorePanel
 					time={this.getState().stats.timeValue}
 					steps={this.getState().stats.steps}
-					mazeMap={this.maze[0].mazeMap}
+					mazeMap={this.getState().currentMaze}
 					gameSelect={this.displayEndGame.bind(this)} />
 				<ButtonsPanel
 					customEvents={this.getTouchEvents()}
@@ -277,10 +282,9 @@ export default class App extends Component {
 			endGame = <EndGame
 				time={this.getState().stats.timeValue}
 				steps={this.getState().stats.steps}
-				mazeMap={this.maze[0].mazeMap}
+				mazeMap={this.getState().currentMaze}
 				gameSelect={this.displayGameSelect.bind(this)}
-				displayControlPanel={this.displayControlPanel.bind(this)}
-				mazeNumber={0}/>
+				displayControlPanel={this.displayControlPanel.bind(this)}/>
 		}
 
 		return (

@@ -7,7 +7,9 @@ const constants = {
 
 	SET_TIME_VALUE:		'SET_TIME_VALUE',
 	SET_TOP_SCORE:		'SET_TOP_SCORE',
-	SET_STEPS:			'SET_STEPS'
+	SET_STEPS:			'SET_STEPS',
+
+	SET_CURRENT_MAZE:	'SET_CURRENT_MAZE'
 }
 
 export default constants

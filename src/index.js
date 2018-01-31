@@ -28,7 +28,14 @@ const initialState = {
     stats: {
         topScore: 0,
         steps: 0,
-        timeValue: 0,
+        timeValue: 0
+    },
+    currentMaze: {
+        id: 0,
+		maxTime: 60,
+		maxSteps: 100,
+		blockSize: 28,
+		map: []
     }
 }
 
