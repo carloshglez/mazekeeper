@@ -80,7 +80,7 @@ export default class Maze {
     }
 
     isAvailable(newPosition) {
-        if (this.mazeMap.map.length > newPosition.row && this.mazeMap.map[0].length > newPosition.column) {
+        if (newPosition.row >= 0 && newPosition.column >= 0 && this.mazeMap.map.length > newPosition.row && this.mazeMap.map[0].length > newPosition.column) {
             let currentBlock = this.mazeMap.map[newPosition.row][newPosition.column];
             return (currentBlock === BLOCK_TYPE.PATH.cellValue || currentBlock === BLOCK_TYPE.EXIT.cellValue)
         } else {
