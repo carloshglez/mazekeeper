@@ -7,7 +7,7 @@ import MdArrowBack from 'react-icons/lib/md/arrow-back'
 import MdLock from 'react-icons/lib/md/lock'
 import MdInfo from 'react-icons/lib/md/info'
 import MdExitToApp from 'react-icons/lib/md/exit-to-app'
-import { isPassive, isMobileDevice } from '../util/util';
+import { isPassive, isMobileDevice, NEW_MAP } from '../util/util';
 import { MAZE_WORLD } from '../util/mazes'
 
 export default class SelectGame extends React.Component {
@@ -61,7 +61,7 @@ export default class SelectGame extends React.Component {
 			icon: <MdStarOutline/>,
 			name: MAZE_WORLD[mazeNumber].name,
 			onClick: this.props.displayControlPanel.bind(this, mazeNumber),
-			onContextMenu: null
+			onContextMenu: this.props.updateMaze.bind(this, NEW_MAP)
 		}
 		let mazeButton = mazeDisabled;
 
