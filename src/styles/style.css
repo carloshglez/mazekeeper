@@ -272,8 +272,8 @@ user-select: none;
 
 .mazeButton {
   color: #ffffff;
-  font-size: 18px;
-  padding: 10px 20px;
+  font-size: 15px;
+  padding: 10px 0px 10px 0px;
 	margin-bottom: 20px;
 	font-family: 'PT Mono', serif;
 	cursor: pointer;
@@ -302,6 +302,9 @@ user-select: none;
   outline: none;
 }
 .mazelevel {
+  font-size: 18px;
+}
+.mazename {
   font-size: 15px;
 }
 

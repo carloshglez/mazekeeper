@@ -1,6 +1,7 @@
 export const MAZE_WORLD = [
 	{
 		id: 0,
+		name: 'Test A',
 		maxTime: 60,
 		maxSteps: 200,
 		blockSize: 28,
@@ -19,6 +20,7 @@ export const MAZE_WORLD = [
 	},
 	{
 		id: 1,
+		name: 'Test B',
 		maxTime: 50,
 		maxSteps: 150,
 		blockSize: 28,
@@ -37,6 +39,7 @@ export const MAZE_WORLD = [
 	},
 	{
 		id: 2,
+		name: 'Test C',
 		maxTime: 30,
 		maxSteps: 100,
 		blockSize: 28,

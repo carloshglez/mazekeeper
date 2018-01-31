@@ -1,7 +1,7 @@
 import React from 'react';
 import MdAccessAlarm from 'react-icons/lib/md/access-alarm'
 import MdStars from 'react-icons/lib/md/stars'
-import MdStarOutline from 'react-icons/lib/md/star-outline'
+import GoSteps from 'react-icons/lib/go/steps'
 import MdExitToApp from 'react-icons/lib/md/exit-to-app'
 import Progress from 'react-progressbar';
 
@@ -15,7 +15,7 @@ export default class ScorePanel extends React.Component {
                     <MdStars /> Top Steps: {new Intl.NumberFormat().format(this.props.steps)}
                 </span>
                 <span className='score current-score'>
-                    <MdStarOutline /> Steps: {new Intl.NumberFormat().format(this.props.steps)} / {this.props.mazeMap.maxSteps}
+                    <GoSteps /> Steps: {new Intl.NumberFormat().format(this.props.steps)} / {this.props.mazeMap.maxSteps}
                 </span>
                 <span className='score settings-score'>
                     <MdExitToApp onClick={this.props.endGame.bind(this)} />

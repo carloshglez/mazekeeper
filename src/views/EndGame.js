@@ -3,6 +3,7 @@ import React from 'react';
 import FaRepeat from 'react-icons/lib/fa/repeat'
 import MdExitToApp from 'react-icons/lib/md/exit-to-app'
 import FaTrophy from 'react-icons/lib/fa/trophy'
+import FaThumbsUp from 'react-icons/lib/fa/thumbs-up'
 
 export default class EndGame extends React.Component {
 	render() {
@@ -11,7 +12,7 @@ export default class EndGame extends React.Component {
 			'You Win!'
 			]
 		let winMessage = [
-			<div>Great job! :)</div>,
+			<div><div className='got-award'><FaThumbsUp/></div>Great job! :)</div>,
 			'Game Over!'
 			]
 		let lostMessage = [

@@ -6,7 +6,6 @@ import MdStarOutline from 'react-icons/lib/md/star-outline'
 import MdArrowBack from 'react-icons/lib/md/arrow-back'
 import MdLock from 'react-icons/lib/md/lock'
 import MdInfo from 'react-icons/lib/md/info'
-import FaTrophy from 'react-icons/lib/fa/trophy'
 import MdExitToApp from 'react-icons/lib/md/exit-to-app'
 import { isPassive, isMobileDevice } from '../util/util';
 import { MAZE_WORLD } from '../util/mazes'
@@ -45,19 +44,22 @@ export default class SelectGame extends React.Component {
 	getMazeButton(mazeNumber) {
 		let mazeDisabled = {
 			style: 'mazeButton disabled',
-			icon: <MdStarOutline/>,
+			icon: <MdLock/>,
+			name: '???',
 			onClick: null,
 			onContextMenu: null
 		}
 		let mazeVisited = {
 			style: 'mazeButton visited',
 			icon: <MdStars/>,
+			name: MAZE_WORLD[mazeNumber].name,
 			onClick: this.props.displayControlPanel.bind(this, mazeNumber),
 			onContextMenu: this.props.updateMaze.bind(this, mazeNumber)
 		}
 		let mazeInProgress = {
 			style: 'mazeButton current',
 			icon: <MdStarOutline/>,
+			name: MAZE_WORLD[mazeNumber].name,
 			onClick: this.props.displayControlPanel.bind(this, mazeNumber),
 			onContextMenu: null
 		}
@@ -71,8 +73,8 @@ export default class SelectGame extends React.Component {
 
 		return (
 			<button className={mazeButton.style} onContextMenu={mazeButton.onContextMenu} onClick={mazeButton.onClick}>
-				<div className='mazelevel'>{mazeButton.icon}{mazeButton.icon}{mazeButton.icon}</div>
-				{mazeNumber}
+				<div className='mazelevel'>{mazeButton.icon}</div>#{mazeNumber}
+				<div className='mazename'><br/>{mazeButton.name}</div>
 			</button>
 		);
 	}
