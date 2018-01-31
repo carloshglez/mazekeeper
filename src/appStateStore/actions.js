@@ -39,23 +39,37 @@ export function setGameState (gameState) {
 /*----------------------------------------------------------*/
 /*----------------------------------------------------------*/
 
-export function setTimeValue (value) {
+export function setTimeCounter (value) {
     return {
-        type: C.SET_TIME_VALUE,
+        type: C.SET_TIME_COUNTER,
         payload: value
     }
 }
 
-export function setTopScore (score) {
+export function setTopSteps (value) {
     return {
-        type: C.SET_TOP_SCORE,
-        payload: score
+        type: C.SET_TOP_STEPS,
+        payload: value
     }
 }
 
-export function setSteps (value) {
+export function setTopTime (value) {
     return {
-        type: C.SET_STEPS,
+        type: C.SET_TOP_TIME,
+        payload: value
+    }
+}
+
+export function setCurrentSteps (value) {
+    return {
+        type: C.SET_CURRENT_STEPS,
+        payload: value
+    }
+}
+
+export function setCurrentTime (value) {
+    return {
+        type: C.SET_CURRENT_TIME,
         payload: value
     }
 }

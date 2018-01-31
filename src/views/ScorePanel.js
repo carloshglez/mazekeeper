@@ -18,7 +18,7 @@ export default class ScorePanel extends React.Component {
                     <MdStarOutline /> Steps: {new Intl.NumberFormat().format(this.props.steps)} / {this.props.mazeMap.maxSteps}
                 </span>
                 <span className='score settings-score'>
-                    <MdExitToApp onClick={this.props.gameSelect.bind(this, 0)} />
+                    <MdExitToApp onClick={this.props.endGame.bind(this)} />
                 </span>
                 <span className='score time-score'>
                     <div style={{ float: 'left' }}><MdAccessAlarm /></div>

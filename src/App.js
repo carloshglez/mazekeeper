@@ -179,15 +179,11 @@ export default class App extends Component {
 	}
 
 	addSteps() {
-		this.actions.setSteps(this.getState().stats.steps + 1);
-	}
-
-	setTimeCounter(time) {
-		this.actions.setTimeValue(time);
+		this.actions.setCurrentSteps(this.getState().stats.currentSteps + 1);
 	}
 
 	startTimer(item, time) {
-		this.setTimeCounter(time);
+		this.actions.setTimeCounter(time);
 		clearInterval(this.timerID);
 		this.timerID = setInterval(
 			() => this.tick(item),
@@ -196,8 +192,9 @@ export default class App extends Component {
 	}
 
 	tick(item) {
-		if (this.getState().stats.timeValue > 0) {
-			this.setTimeCounter(this.getState().stats.timeValue - 1);
+		if (this.getState().stats.timeCounter > 0) {
+			this.actions.setTimeCounter(this.getState().stats.timeCounter - 1);
+			this.actions.setCurrentTime(this.getState().stats.currentTime + 1);
 		} else {
 			clearInterval(this.timerID);
 			console.log('Time Over!')
@@ -221,8 +218,12 @@ export default class App extends Component {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.SELECT);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.SELECT);
-		this.setTimeCounter(0);
-		this.actions.setSteps(0);
+
+		this.actions.setTimeCounter(0);
+		this.actions.setTopTime(0);
+		this.actions.setTopSteps(0);
+		this.actions.setCurrentTime(0);
+		this.actions.setCurrentSteps(0);
 	}
 
 	displayControlPanel(mazeNumber) {
@@ -231,14 +232,19 @@ export default class App extends Component {
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.INGAME);
 
 		this.startTimer(null,this.maze[0].mazeMap.maxTime);
-		this.actions.setSteps(0);
+		//this.actions.setTopTime(0);
+		//this.actions.setTopSteps(0);
+		this.actions.setCurrentTime(0);
+		this.actions.setCurrentSteps(0);
+
+		this.actions.setCurrentMaze(this.maze[0].mazeMap);
 	}
 
 	displayEndGame() {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.OVER);
 		this.maze[0].updateBackgroundMaze(GAME_OVER, GAME_STATE.OVER);
-		this.setTimeCounter(0);
+		this.actions.setTimeCounter(0);
 		clearInterval(this.timerID);
 	}
 
@@ -269,10 +275,10 @@ export default class App extends Component {
 		if (this.getState().game.inGame) {
 			controlPanel = <div>
 				<ScorePanel
-					time={this.getState().stats.timeValue}
-					steps={this.getState().stats.steps}
-					mazeMap={this.maze[0].mazeMap}
-					gameSelect={this.displayEndGame.bind(this)} />
+					time={this.getState().stats.timeCounter}
+					steps={this.getState().stats.currentSteps}
+					mazeMap={this.getState().currentMaze}
+					endGame={this.displayEndGame.bind(this)} />
 				<ButtonsPanel
 					customEvents={this.getTouchEvents()}
 					handleButtonTouch={this.handleButtonTouch.bind(this)} />
@@ -280,9 +286,9 @@ export default class App extends Component {
 		}
 		if (this.getState().game.over) {
 			endGame = <EndGame
-				time={this.getState().stats.timeValue}
-				steps={this.getState().stats.steps}
-				mazeMap={this.maze[0].mazeMap}
+				time={this.getState().stats.currentTime}
+				steps={this.getState().stats.currentSteps}
+				mazeMap={this.getState().currentMaze}
 				gameSelect={this.displayGameSelect.bind(this)}
 				displayControlPanel={this.displayControlPanel.bind(this)}/>
 		}

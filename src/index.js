@@ -26,9 +26,11 @@ const initialState = {
         awards: false
     },
     stats: {
-        topScore: 0,
-        steps: 0,
-        timeValue: 0
+        timeCounter: 0,
+        topSteps: 0,
+        topTime: 0,
+        currentSteps: 0,
+        currentTime: 0
     },
     currentMaze: {
         id: 0,

@@ -53,27 +53,45 @@ export const game = (state = {}, action) => {
     }
 }
 
-export const timeValue = (state = 0, action) => {
+export const timeCounter = (state = 0, action) => {
     switch (action.type) {
-        case C.SET_TIME_VALUE:
+        case C.SET_TIME_COUNTER:
             return parseInt(action.payload)
         default:
             return state
     }
 }
 
-export const topScore = (state = 0, action) => {
+export const topSteps = (state = 0, action) => {
     switch (action.type) {
-        case C.SET_TOP_SCORE:
+        case C.SET_TOP_STEPS:
             return parseInt(action.payload)
         default:
             return state
     }
 }
 
-export const steps = (state = 0, action) => {
+export const topTime = (state = 0, action) => {
     switch (action.type) {
-        case C.SET_STEPS:
+        case C.SET_TOP_TIME:
+            return parseInt(action.payload)
+        default:
+            return state
+    }
+}
+
+export const currentSteps = (state = 0, action) => {
+    switch (action.type) {
+        case C.SET_CURRENT_STEPS:
+            return parseInt(action.payload)
+        default:
+            return state
+    }
+}
+
+export const currentTime = (state = 0, action) => {
+    switch (action.type) {
+        case C.SET_CURRENT_TIME:
             return parseInt(action.payload)
         default:
             return state
@@ -95,9 +113,11 @@ export default combineReducers({
     keys,
     game,
     stats: combineReducers({
-        timeValue,
-        steps,
-        topScore
+        timeCounter,
+        topSteps,
+        topTime,
+        currentSteps,
+        currentTime
     }),
     currentMaze
 })
