@@ -205,13 +205,13 @@ export default class App extends Component {
 	displayIntro() {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.INTRO);
-		this.maze[0].updateBackgroundMaze(TITLE_MAP, GAME_STATE.INTRO);
+		this.maze[0].updateMaze(TITLE_MAP, GAME_STATE.INTRO);
 	}
 
 	displayAbout() {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.ABOUT);
-		this.maze[0].updateBackgroundMaze(ABOUT_MAP, GAME_STATE.ABOUT);
+		this.maze[0].updateMaze(ABOUT_MAP, GAME_STATE.ABOUT);
 	}
 
 	displayGameSelect(mazeNumber) {
@@ -243,7 +243,7 @@ export default class App extends Component {
 	displayEndGame() {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.OVER);
-		this.maze[0].updateBackgroundMaze(GAME_OVER, GAME_STATE.OVER);
+		this.maze[0].updateMaze(GAME_OVER, GAME_STATE.OVER);
 		this.actions.setTimeCounter(0);
 		clearInterval(this.timerID);
 	}

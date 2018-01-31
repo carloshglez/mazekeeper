@@ -23,14 +23,12 @@ export default class Maze {
         this.drawMaze();
     }
 
-    updateBackgroundMaze(mazeMap, gameState) {
-        this.mazeMap = mazeMap;
-        this.gameState = gameState;
-        this.drawMaze();
-    }
-
-    updateMaze(mazeNumber, gameState) {
-        this.mazeMap = MAZE_WORLD[mazeNumber];
+    updateMaze(mazeSource, gameState) {
+        if (Number.isSafeInteger(mazeSource)) {
+            this.mazeMap = MAZE_WORLD[mazeSource];
+        } else {
+            this.mazeMap = mazeSource;
+        }
         this.gameState = gameState;
         this.drawMaze();
     }
@@ -49,7 +47,10 @@ export default class Maze {
                     this.currentPosition = { row, column }
                 }
                 if (cellValue === BLOCK_TYPE.WALL.cellValue) {
-                    this.drawBlock(row, column, (this.gameState === GAME_STATE.SELECT || this.gameState === GAME_STATE.OVER) ? BLOCK_TYPE.ILLUSION_WALL : BLOCK_TYPE.WALL)
+                    this.drawBlock(row, column,
+                        (this.gameState === GAME_STATE.SELECT || this.gameState === GAME_STATE.OVER) ?
+                        BLOCK_TYPE.ILLUSION_WALL :
+                        BLOCK_TYPE.WALL)
                 }
             });
         });
