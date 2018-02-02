@@ -239,8 +239,8 @@ export default class App extends Component {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.OVER);
 		this.maze[0].updateMaze(GAME_OVER, GAME_STATE.OVER);
-		this.startTimer(null,0);
-		clearInterval(this.timerID);
+
+		this.actions.setTimeCounter(0);
 	}
 
 	render() {
