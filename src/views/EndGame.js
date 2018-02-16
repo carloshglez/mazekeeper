@@ -41,10 +41,10 @@ export default class EndGame extends React.Component {
 						<h4>&nbsp;</h4>
 						<p>
 							{this.props.steps} / {this.props.mazeMap.maxSteps}	<br/>
-							{0}	<br/>
+							{this.props.currentPosition[0]},{this.props.currentPosition[1]}	<br/>
 							<br/>
 							{this.props.time} / {this.props.mazeMap.maxTime}	seg.<br/>
-							{0} seg.<br/>
+							{this.props.exitPosition.row},{this.props.exitPosition.column} seg.<br/>
 						</p>
 						<hr/>
 						{message[0]}

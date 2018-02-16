@@ -98,6 +98,15 @@ export const currentTime = (state = 0, action) => {
     }
 }
 
+export const currentPosition = (state = [0,0], action) => {
+    switch (action.type) {
+        case C.SET_CURRENT_POSITION:
+            return (action.payload)
+        default:
+            return state
+    }
+}
+
 export const currentMaze = (state = {}, action) => {
     switch (action.type) {
         case C.SET_CURRENT_MAZE:
@@ -117,7 +126,8 @@ export default combineReducers({
         topSteps,
         topTime,
         currentSteps,
-        currentTime
+        currentTime,
+        currentPosition
     }),
     currentMaze
 })

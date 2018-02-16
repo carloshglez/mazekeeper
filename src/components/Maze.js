@@ -8,6 +8,7 @@ export default class Maze {
         this.create = args.create;
         this.addSteps = args.addSteps;
         this.endGame = args.endGame;
+        this.setCurrentPosition = args.setCurrentPosition;
         this.gameState = GAME_STATE.INTRO;
 
         this.currentPosition = {
@@ -45,6 +46,7 @@ export default class Maze {
                 if (cellValue === BLOCK_TYPE.ENTRY.cellValue) {
                     this.drawBlock(row, column, BLOCK_TYPE.ENTRY)
                     this.currentPosition = { row, column }
+                    this.setCurrentPosition([this.currentPosition.row, this.currentPosition.column]);
                 }
                 if (cellValue === BLOCK_TYPE.WALL.cellValue) {
                     this.drawBlock(row, column,
@@ -113,11 +115,13 @@ export default class Maze {
                     this.drawBlock(this.currentPosition.row, this.currentPosition.column, BLOCK_TYPE.PATH, false)
                     this.drawBlock(newPosition.row, newPosition.column, BLOCK_TYPE.ACTIVE, false)
                     this.addSteps();
-                    if (this.isExitPosition(newPosition)) {
+
+                    this.currentPosition = newPosition;
+                    this.setCurrentPosition([this.currentPosition.row, this.currentPosition.column]);
+                    if (this.isExitPosition(this.currentPosition)) {
                         console.log('Win!')
                         this.endGame();
                     }
-                    this.currentPosition = newPosition;
                 }
                 this.lastMove = Date.now();
             }

@@ -23,7 +23,8 @@ export default class App extends Component {
 			mazeMap: TITLE_MAP,
 			create: this.createObject.bind(this),
 			addSteps: this.addSteps.bind(this),
-			endGame: this.displayEndGame.bind(this)
+			endGame: this.displayEndGame.bind(this),
+			setCurrentPosition: this.actions.setCurrentPosition
 		}), 'maze');
 	}
 
@@ -95,9 +96,9 @@ export default class App extends Component {
 
 		keys[action] = true;
 		this.timerID = setTimeout(
-            () => { keys[action] = false; },
-            50
-        );
+			() => { keys[action] = false; },
+			50
+		);
 		this.actions.setEventKeys(keys);
 	}
 
@@ -192,7 +193,6 @@ export default class App extends Component {
 			this.actions.setTimeCounter(this.getState().stats.timeCounter - 1);
 			this.actions.setCurrentTime(this.getState().stats.currentTime + 1);
 		} else {
-			clearInterval(this.timerID);
 			console.log('Time Over!')
 			this.displayEndGame();
 		}
@@ -227,7 +227,7 @@ export default class App extends Component {
 		this.actions.setGameState(GAME_STATE.INGAME);
 		this.maze[0].updateMaze(mazeNumber, GAME_STATE.INGAME);
 
-		this.startTimer(null,this.maze[0].mazeMap.maxTime);
+		this.startTimer(null, this.maze[0].mazeMap.maxTime);
 		//this.actions.setTopTime(0);
 		//this.actions.setTopSteps(0);
 		this.actions.setCurrentTime(0);
@@ -241,6 +241,7 @@ export default class App extends Component {
 		this.actions.setGameState(GAME_STATE.OVER);
 		this.maze[0].updateMaze(GAME_OVER, GAME_STATE.OVER);
 
+		clearInterval(this.timerID);
 		this.actions.setTimeCounter(0);
 	}
 
@@ -284,9 +285,11 @@ export default class App extends Component {
 			endGame = <EndGame
 				time={this.getState().stats.currentTime}
 				steps={this.getState().stats.currentSteps}
+				currentPosition={this.getState().stats.currentPosition}
+				exitPosition={this.maze[0].exitPosition}
 				mazeMap={this.getState().currentMaze}
 				gameSelect={this.displayGameSelect.bind(this)}
-				displayControlPanel={this.displayControlPanel.bind(this)}/>
+				displayControlPanel={this.displayControlPanel.bind(this)} />
 		}
 
 		return (

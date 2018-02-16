@@ -74,6 +74,13 @@ export function setCurrentTime (value) {
     }
 }
 
+export function setCurrentPosition (value) {
+    return {
+        type: C.SET_CURRENT_POSITION,
+        payload: value
+    }
+}
+
 /*----------------------------------------------------------*/
 /*----------------------------------------------------------*/
 export function setCurrentMaze (currentMaze) {

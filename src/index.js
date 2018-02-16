@@ -22,15 +22,15 @@ const initialState = {
         intro: true,
         select: false,
         inGame: false,
-        about: false,
-        awards: false
+        about: false
     },
     stats: {
         timeCounter: 0,
         topSteps: 0,
         topTime: 0,
         currentSteps: 0,
-        currentTime: 0
+        currentTime: 0,
+        currentPosition: [0,0]
     },
     currentMaze: {
         id: 0,
