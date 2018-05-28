@@ -95,7 +95,7 @@ export default class App extends Component {
 		let action = e.currentTarget.id;
 
 		keys[action] = true;
-		this.timerID = setTimeout(
+		this.timerID2 = setTimeout(
 			() => { keys[action] = false; },
 			50
 		);
@@ -194,6 +194,7 @@ export default class App extends Component {
 			this.actions.setCurrentTime(this.getState().stats.currentTime + 1);
 		} else {
 			console.log('Time Over!')
+			clearInterval(this.timerID);
 			this.displayEndGame();
 		}
 	}
