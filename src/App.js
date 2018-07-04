@@ -237,13 +237,17 @@ export default class App extends Component {
 		this.actions.setCurrentMaze(this.maze[0].mazeMap);
 	}
 
-	displayEndGame() {
+	displayEndGame(force=false) {
 		this.deleteBlocks();
 		this.actions.setGameState(GAME_STATE.OVER);
 		this.maze[0].updateMaze(GAME_OVER, GAME_STATE.OVER);
 
 		clearInterval(this.timerID);
-		this.actions.setTimeCounter(0);
+		if(force) {
+			this.actions.setTimeCounter(-1);
+		} else {
+			this.actions.setTimeCounter(0);
+		}
 	}
 
 	render() {
@@ -276,7 +280,7 @@ export default class App extends Component {
 					time={this.getState().stats.timeCounter}
 					steps={this.getState().stats.currentSteps}
 					mazeMap={this.getState().currentMaze}
-					endGame={this.displayEndGame.bind(this)} />
+					endGame={this.displayEndGame.bind(this, true)} />
 				<ButtonsPanel
 					customEvents={this.getTouchEvents()}
 					handleButtonTouch={this.handleButtonTouch.bind(this)} />
@@ -284,7 +288,7 @@ export default class App extends Component {
 		}
 		if (this.getState().game.over) {
 			endGame = <EndGame
-				time={this.getState().stats.currentTime}
+				time={this.getState().stats.timeCounter}
 				steps={this.getState().stats.currentSteps}
 				currentPosition={this.getState().stats.currentPosition}
 				exitPosition={this.maze[0].exitPosition}

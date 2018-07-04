@@ -29,3 +29,5 @@ LocalStorageManager.setTopScore(0,10,20);
 LocalStorageManager.setTopScore(1,30,40);
 LocalStorageManager.setTopScore(0,50,60);
 console.log(LocalStorageManager.getTopScores());
+console.log(LocalStorageManager.getTopScoreOf(1));
+console.log(LocalStorageManager.getTopScoreOf(1).steps);
