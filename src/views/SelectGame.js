@@ -9,12 +9,16 @@ import MdInfo from 'react-icons/lib/md/info'
 import MdExitToApp from 'react-icons/lib/md/exit-to-app'
 import { isPassive, isMobileDevice, NEW_MAP } from '../util/util';
 import { MAZE_WORLD } from '../util/mazes'
+import { LocalStorageManager } from '../util/localStorageHelper'
 
 export default class SelectGame extends React.Component {
 	constructor(props) {
 		super(props);
 		this.myScroll = null;
-		this.currentMaze = 2;
+
+		let topScoresArrayLenght = LocalStorageManager.getTopScores().length;
+		this.currentMazeId = topScoresArrayLenght;
+		//this.currentMazeId = 2;
 	}
 
 	componentDidMount() {
@@ -41,7 +45,7 @@ export default class SelectGame extends React.Component {
 		this.myScroll = null;
 	}
 
-	getMazeButton(mazeNumber) {
+	getMazeButton(mazeId) {
 		let mazeDisabled = {
 			style: 'mazeButton disabled',
 			icon: <MdLock/>,
@@ -52,28 +56,28 @@ export default class SelectGame extends React.Component {
 		let mazeVisited = {
 			style: 'mazeButton visited',
 			icon: <MdStars/>,
-			name: MAZE_WORLD[mazeNumber].name,
-			onClick: this.props.displayControlPanel.bind(this, mazeNumber),
-			onContextMenu: this.props.updateMaze.bind(this, mazeNumber)
+			name: MAZE_WORLD[mazeId].name,
+			onClick: this.props.displayControlPanel.bind(this, mazeId),
+			onContextMenu: this.props.updateMaze.bind(this, mazeId)
 		}
 		let mazeInProgress = {
 			style: 'mazeButton current',
 			icon: <MdStarOutline/>,
-			name: MAZE_WORLD[mazeNumber].name,
-			onClick: this.props.displayControlPanel.bind(this, mazeNumber),
+			name: MAZE_WORLD[mazeId].name,
+			onClick: this.props.displayControlPanel.bind(this, mazeId),
 			onContextMenu: this.props.updateMaze.bind(this, NEW_MAP)
 		}
 		let mazeButton = mazeDisabled;
 
-		if (mazeNumber < this.currentMaze) {
+		if (mazeId < this.currentMazeId) {
 			mazeButton = mazeVisited;
-		} else if (mazeNumber === this.currentMaze) {
+		} else if (mazeId === this.currentMazeId) {
 			mazeButton = mazeInProgress;
 		}
 
 		return (
 			<button className={mazeButton.style} onContextMenu={mazeButton.onContextMenu} onClick={mazeButton.onClick}>
-				<div className='mazelevel'>{mazeButton.icon}</div>#{mazeNumber}
+				<div className='mazelevel'>{mazeButton.icon}</div>#{mazeId}
 				<div className='mazename'><br/>{mazeButton.name}</div>
 			</button>
 		);
@@ -81,11 +85,11 @@ export default class SelectGame extends React.Component {
 
 	render() {
 		var indents = [];
-		for (var i = 0; i < MAZE_WORLD.length; i++) {
+		for (var id = 0; id < MAZE_WORLD.length; id++) {
 			indents.push(
-			<li key={i}>
-				{this.getMazeButton(i)}<br />
-				{(++i < MAZE_WORLD.length) ? this.getMazeButton(i) : null}
+			<li key={id}>
+				{this.getMazeButton(id)}<br />
+				{(++id < MAZE_WORLD.length) ? this.getMazeButton(id) : null}
 			</li>);
 		}
 		return (

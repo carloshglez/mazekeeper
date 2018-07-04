@@ -1,4 +1,5 @@
 import React from 'react';
+import { NEW_MAP } from '../util/util';
 
 export default class Intro extends React.Component {
     render() {
@@ -10,7 +11,7 @@ export default class Intro extends React.Component {
                 <div className='intro'>
                     <button
                         className='infoButton'
-                        onClick={this.props.gameSelect.bind(this, 0)}>
+                        onClick={this.props.gameSelect.bind(this, NEW_MAP)}>
                         S T A R T
                     </button>
                 </div>

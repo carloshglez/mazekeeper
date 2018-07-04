@@ -8,7 +8,6 @@ import ButtonsPanel from './views/ButtonsPanel'
 import EndGame from './views/EndGame'
 import About from './views/About'
 import { TITLE_MAP, ABOUT_MAP, GAME_OVER, KEY, GAME_STATE } from './util/util'
-import { LocalStorageManager } from './util/localStorageHelper'
 
 export default class App extends Component {
 	constructor(props) {

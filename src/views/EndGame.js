@@ -1,4 +1,6 @@
 import React from 'react';
+import { NEW_MAP } from '../util/util';
+import { LocalStorageManager } from '../util/localStorageHelper'
 
 import FaRepeat from 'react-icons/lib/fa/repeat'
 import MdExitToApp from 'react-icons/lib/md/exit-to-app'
@@ -35,6 +37,7 @@ export default class EndGame extends React.Component {
 				<div><div className='got-award'><FaThumbsUp /></div>:) Great job!</div>,
 				'You Win!'
 			];
+			LocalStorageManager.setTopScore(this.props.mazeMap.id, this.props.steps, this.props.time);
 		} else if (this.giveUp()) {
 			console.log("giveUp");
 			endGameMessage = [
@@ -69,10 +72,10 @@ export default class EndGame extends React.Component {
 						<h4>&nbsp;</h4>
 						<p>
 							{this.props.steps} / {this.props.mazeMap.maxSteps}	<br />
-							{this.props.currentPosition[0]},{this.props.currentPosition[1]}	<br />
+							{LocalStorageManager.getTopScoreOf(this.props.mazeMap.id).steps || 0}	<br />
 							<br />
 							{this.props.time} / {this.props.mazeMap.maxTime}	seg.<br />
-							{this.props.exitPosition.row},{this.props.exitPosition.column} seg.<br />
+							{LocalStorageManager.getTopScoreOf(this.props.mazeMap.id).time || 0} seg.<br />
 						</p>
 						<hr />
 						{endGameMessage[0]}
@@ -87,7 +90,7 @@ export default class EndGame extends React.Component {
 					</button>
 					<button
 						className='infoButton'
-						onClick={this.props.gameSelect.bind(this, 0)}>
+						onClick={this.props.gameSelect.bind(this, NEW_MAP)}>
 						<MdExitToApp /> Exit
 					</button>
 				</div>
